@@ -22,7 +22,8 @@ public class Paso {
                                 FIN_A,
                                 FIN_B,
                                 FIN_ESCUCHAR,
-                                FIN_COMPRAR
+                                FIN_COMPRAR,
+                                COMPRAR_DD_ESCUCHAR
                                 }
     public static enum Actividad {
                                 MIRAR,
@@ -65,10 +66,15 @@ public class Paso {
     private int rndActividad;
     private int rndTipoConsulta;
     private int rndEscucha;
+    private double tiempoEscucha;
     private double finEscucha;
     private int rndDecision;
     private double finCompra;
+    private double comprarDDEscuchar;
     
+    private String tipoActividad;
+    private String tipoConsulta;
+    private String decision;
     private Evento evento;
     private String eventoNumerado;
     private Evento menorEvento;
@@ -87,7 +93,7 @@ public class Paso {
         this.evento = evento;
     }
     
-    public List<Double> getRelojMenorEvento(){
+    public double getRelojMenorEvento(){
         
         if(proxLlegada > 0){
             eventosOrdenados.add(proxLlegada);
@@ -106,9 +112,69 @@ public class Paso {
         }
         
         Collections.sort(eventosOrdenados);
-        return eventosOrdenados;
+        
+        if(eventosOrdenados.size() > 0) {
+                
+            double a = eventosOrdenados.get(0);
+            
+            if(a==proxLlegada){
+               menorEvento = Evento.LLEGADA;
+               return proxLlegada;
+            }
+            if(a==finA){
+                menorEvento = Evento.FIN_A;
+                return finA;
+            }
+            if(a==finB){
+                menorEvento = Evento.FIN_B;
+                return finB;
+            }
+            if(a==finEscucha){
+                menorEvento = Evento.FIN_ESCUCHAR;
+                return finEscucha;
+            }
+            if(a==finCompra){
+                menorEvento = Evento.FIN_COMPRAR;
+                return finCompra;
+            }
+        }
+        return 0;
     }
 
+    public String getTipoActividad() {
+        return tipoActividad;
+    }
+
+    public void setTipoActividad(String tipoActividad) {
+        this.tipoActividad = tipoActividad;
+    }
+
+    public String getTipoConsulta() {
+        return tipoConsulta;
+    }
+
+    public void setTipoConsulta(String tipoConsulta) {
+        this.tipoConsulta = tipoConsulta;
+    }
+
+    public double getTiempoEscucha() {
+        return tiempoEscucha;
+    }
+
+    public void setTiempoEscucha(double tiempoEscucha) {
+        this.tiempoEscucha = tiempoEscucha;
+    }
+
+    public double getComprarDDEscuchar() {
+        return comprarDDEscuchar;
+    }
+
+    public void setComprarDDEscuchar(double comprarDDEscuchar) {
+        this.comprarDDEscuchar = comprarDDEscuchar;
+    }
+
+    
+    
     public double getHora() {
         return hora;
     }
@@ -261,6 +327,16 @@ public class Paso {
         this.rndDecision = rndDecision;
     }
 
+    public String getDecision() {
+        return decision;
+    }
+
+    public void setDecision(String decision) {
+        this.decision = decision;
+    }
+    
+    
+
     public double getFinCompra() {
         return finCompra;
     }
@@ -281,7 +357,7 @@ public class Paso {
         return eventoNumerado;
     }
 
-    public void setEventoNumerado(String valor) {
+    public void setEventoNumerado(int valor) {
         this.eventoNumerado = eventoNumerado + " " + valor;
     }
 
